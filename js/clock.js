@@ -9,6 +9,8 @@ let minutes
 let seconds
 let hours12h
 let selectedFormat
+const days = [{eng: "Sunday", est: "Pühapäev"}, {eng: "Monday", est:"Esmaspäev"},{eng:"Tuesday", est:"Teisipäev"},{eng:"Wednesday", est:"Kolmapäev"},{eng:"Thursday", est:"Neljapäev"},{eng:"Friday", est:"Reede"},{eng:"Saturday", est:"Laupäev"}]
+const months = [{eng: "January", est:"jaanuar"},{eng: "February", est: "veebruar"},{eng: "March", est: "märts"},{eng: "April", est: "aprill"},{eng: "May", est: "mai"},{eng: "June", est: "juuni"},{eng: "July", est:"juuli"},{eng: "August", est:"august"},{eng: "September", est:"september"},{eng: "October", est:"oktoober"},{eng: "November", est: "november"},{eng: "December", est: "detsember"}]
 
 window.onload = function () {
     init()
@@ -25,7 +27,6 @@ function init () {
     settingsButtonText = document.querySelector('#settingsButton')
     settingsBarArrow = document.querySelector('#settingsBarButton')
     timeFormatText = document.querySelector('#timeFormat')
-    settingsBarArrow.innerHTML = '<i class="fas fa-angle-down"></i>'
     langButton.innerHTML = '<img src="images/estonian.png" alt="Eesti">'
     colorText.innerHTML = 'Taustavärv'
     colorBg.innerHTML = 'Taustavärv'
@@ -56,7 +57,7 @@ function startClock () {
         let dateMonth = date.getMonth()
         let dateYear = date.getFullYear()
 
-        dayName = dayText(day, language)
+        dayName = days[day][language]
         if(hours < 10){
             hours = '0' + hours
         }
@@ -71,56 +72,33 @@ function startClock () {
         } else {
             amPm = 'PM'
         }
-        if(amPm == 'PM'){
+        if(amPm === 'PM'){
             hours12h = hours - 12
         } else {
             hours12h = hours
         }
-        if (selectedFormat == '24'){
+        if (selectedFormat === '24'){
             time = hours + ':' + minutes + ':' + seconds
         } else {
             time = hours12h + ':' + minutes + ':' + seconds + ' ' + 
                 amPm
         }
         timeContainer.innerHTML = time
-        dateText = dateDay + '. ' + monthText(dateMonth, language) + 
+        if(language === 'est'){
+            dateText = dateDay + '. ' + months[dateMonth][language] + 
             ' ' + dateYear
+        } else {
+            dateText = dateDay + ' ' + months[dateMonth][language] + 
+            ' ' + dateYear
+        }
+        
         dateContainer.innerHTML = dateText
         dayContainer.innerHTML = dayName
     }, 1000)
 }
 
-function dayText(dayNumber, language){
-    const daysEst = ['Pühapäev', 'Esmaspäev', 'Teisipäev', 'Kolmapäev', 
-        'Neljapäev', 'Reede', 'Laupäev'
-    ]
-    const daysEng = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", 
-        "Friday", "Saturday"
-    ]
-    
-    if (language == "est"){
-        return daysEst[dayNumber]
-    } else if (language == "eng"){
-        return daysEng[dayNumber]
-    } 
-}
-
-function monthText(monthNumber, language){
-    const monthsEst = ['jaanuar', 'veebruar', 'märts', 'aprill', 'mai', 'juuni',
-        'juuli', 'august', 'september', 'november', 'detsember'
-    ]
-    const monthsEng = ['January', 'February', 'March', 'April', 'May', 'June', 
-        'July', 'August', 'September', 'November', 'December'
-    ]
-    if (language == 'est'){
-        return monthsEst[monthNumber]
-    } else if (language == 'eng'){
-        return monthsEng[monthNumber]
-    } 
-}
-
 function changeLang(){
-    if (language == 'est'){
+    if (language === 'est'){
         language = 'eng'
         colorBg.innerHTML = 'Colour'
         colorText.innerHTML = 'Text colour'
@@ -128,7 +106,7 @@ function changeLang(){
             'Link to background'
         settingsSetButtonText.innerHTML = 'Set'
         langButton.innerHTML = '<img src="images/english.png" alt="Inglise">'
-    } else if (language == 'eng'){
+    } else if (language === 'eng'){
         language = 'est'
         colorBg.innerHTML = 'Taustavärv'
         colorText.innerHTML = 'Tekstivärv'
@@ -164,7 +142,7 @@ function goToUrl(url){
 }
 
 function displaySettings(){
-    if (settingsBarStatus == 'open'){
+    if (settingsBarStatus === 'open'){
         settingsBarStatus = 'closed'
         settingsBarArrow.innerHTML = '<i class="fas fa-angle-down"></i>'
         document.getElementById("header").classList.add("noshow")

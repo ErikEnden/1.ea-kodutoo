@@ -15,7 +15,7 @@
         <ul class="settings">
             <button onclick="dropdown()" class="headerButton" id="settingsButton"><img class="settingsIcon" src="images/settingsmenu.png" alt="Seaded"></button>
             <button onclick="changeLang()" class="headerButton" id="langBut"></button>
-            <button class="headerButton" onclick="goToUrl('https://github.com/ErikEnden/1.ea-kodutoo', '_blank')"><img class="githubLogo" src="images/GitHub-Mark-Light-64px.png" alt="github"></button>
+            <button class="headerButton"><a href="https://github.com/ErikEnden/1.ea-kodutoo"><img class="githubLogo" src="images/GitHub-Mark-Light-64px.png" alt="github"></a></button>
             <div id="dropdown" class="dropdown-content">
                     <p id="colorBg"></p>
                     <input type="color" class="dropdownButtons" id="bgSelector">
@@ -39,6 +39,7 @@
     <div class="content">
         <div class="barButtonCont">
                 <button id="settingsBarButton" onclick="displaySettings()">
+                    <i class="fas fa-angle-down"></i>
                 </button>
         </div>
         <div class="day" id="day">
