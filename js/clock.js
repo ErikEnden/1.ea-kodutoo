@@ -136,11 +136,6 @@ function settingsSet(){
     }
 }
 
-function goToUrl(url){
-    let win = window.open(url, '_blank')
-    win.focus()
-}
-
 function displaySettings(){
     if (settingsBarStatus === 'open'){
         settingsBarStatus = 'closed'
